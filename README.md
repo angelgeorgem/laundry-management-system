@@ -4,12 +4,14 @@
 A web-based Laundry Management System developed using Flask. This application helps manage laundry orders, track their status, and estimate processing time efficiently.
 
 
- Features
-- User registration and login
-- Place laundry orders
-- Order tracking system
-- Estimated Time of Arrival (ETA) calculation
-- Admin/Owner dashboard for managing orders
+ Key Features
+- Secure user authentication and session management  
+- Dynamic order placement with customizable parameters  
+- Rule-based ETA prediction for delivery estimation  
+- Real-time order status tracking (Pending, Processing, Completed)  
+- Administrative dashboard for centralized order management  
+- Persistent data storage using relational database systems  
+- Structured and scalable backend using Flask framework  
 
 
 Technologies Used
