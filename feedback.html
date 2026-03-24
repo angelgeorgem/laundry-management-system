@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="text-center">
+        <h1>Leave Feedback</h1>
+        <p>Your feedback helps us improve our service.</p>
+    </div>
+
+    <form action="{{ url_for('feedback', token=order.token) }}" method="POST">
+        <div class="form-group">
+            <label for="feedback">Feedback</label>
+            <textarea name="feedback" id="feedback" rows="5" class="form-control" placeholder="Tell us how we did...">{{ order.customer_feedback or '' }}</textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn">Submit Feedback</button>
+            <a href="{{ url_for('my_orders') }}" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

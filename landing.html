@@ -1,0 +1,425 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center" style="padding: 5rem 1rem; margin-bottom: 4rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <h1 style="color: white; font-size: 3.5rem; margin-bottom: 1rem; font-weight: 700;">Premium Laundry Service</h1>
+    <p style="color: #e3f2fd; font-size: 1.3rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+        Professional care for your clothes with fast and reliable service. Experience the convenience of modern laundry services.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        {% if session.get('user_id') %}
+        <a href="/order" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Book a Pickup</a>
+        <a href="/my-orders" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">My Orders</a>
+        {% else %}
+        <a href="/register" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Get Started</a>
+        <a href="/login" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">Sign In</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Services Section -->
+<div class="container">
+    <div class="section-header">
+        <h2 class="text-center" style="margin-bottom: 1rem; font-size: 2.5rem; color: #2c3e50;">Our Services</h2>
+        <p class="text-center" style="font-size: 1.1rem; color: #7f8c8d; margin-bottom: 3rem;">Comprehensive laundry solutions tailored to your needs</p>
+    </div>
+
+    <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card">
+            <div class="service-icon">🧺</div>
+            <h3>Wash & Fold</h3>
+            <p>Professional washing and folding for your everyday laundry. Perfect for t-shirts, jeans, and casual wear.</p>
+            <div class="service-features">
+                <span class="feature-tag">Light Fabrics</span>
+                <span class="feature-tag">Heavy Fabrics</span>
+            </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card">
+            <div class="service-icon">👔</div>
+            <h3>Steam Ironing</h3>
+            <p>Wrinkle-free perfection for formal wear. Professional pressing for shirts, trousers, and business attire.</p>
+            <div class="service-features">
+                <span class="feature-tag">Formal Wear</span>
+                <span class="feature-tag">Delicate Fabrics</span>
+            </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card">
+            <div class="service-icon">🧥</div>
+            <h3>Dry Cleaning</h3>
+            <p>Expert care for suits, jackets, and special garments. Advanced stain removal and fabric protection.</p>
+            <div class="service-features">
+                <span class="feature-tag">Special Care</span>
+                <span class="feature-tag">Stain Removal</span>
+            </div>
+        </div>
+
+
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="text-center" style="margin-bottom: 1rem; font-size: 2.5rem; color: #2c3e50;">Why Choose WashTrack?</h2>
+            <p class="text-center" style="font-size: 1.1rem; color: #7f8c8d; margin-bottom: 3rem;">Advanced features that make laundry effortless</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">⏱️</div>
+                <h4>Smart Time Estimation</h4>
+                <p>Get accurate completion times based on fabric type, quantity, and dirt level. No more waiting in uncertainty.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <h4>Real-Time Tracking</h4>
+                <p>Track your orders in real-time with unique tokens. Know exactly where your laundry is in the process.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">💳</div>
+                <h4>Secure Payments</h4>
+                <p>Multiple payment options with secure processing. Pay online or on delivery for your convenience.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">⭐</div>
+                <h4>Quality Guarantee</h4>
+                <p>We stand behind our work. Professional care ensures your clothes look and feel their best.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">📝</div>
+                <h4>Special Instructions</h4>
+                <p>Add custom care instructions for delicate items or specific preferences. We handle your clothes with care.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🔄</div>
+                <h4>Order History</h4>
+                <p>Complete order history with payment records. Easy access to all your past transactions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pricing Preview -->
+<div class="pricing-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="text-center" style="margin-bottom: 1rem; font-size: 2.5rem; color: #2c3e50;">Transparent Pricing</h2>
+            <p class="text-center" style="font-size: 1.1rem; color: #7f8c8d; margin-bottom: 3rem;">No hidden fees, clear pricing for all services</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Light Fabrics</h3>
+                <div class="price">₹160<span>/item</span></div>
+                <p>T-shirts, cotton shirts, light jackets</p>
+                <ul>
+                    <li>Standard washing</li>
+                    <li>Neat folding</li>
+                   
+                </ul>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="badge">Most Popular</div>
+                <h3>Heavy Fabrics</h3>
+                <div class="price">₹320<span>/item</span></div>
+                <p>Jeans, jackets, heavy garments</p>
+                <ul>
+                    <li>Intensive cleaning</li>
+                    <li>Professional folding</li>
+                   
+                </ul>
+            </div>
+
+            <div class="pricing-card">
+                <h3>High Dirt Level</h3>
+                <div class="price">+₹80<span>/item</span></div>
+                <p>Extra care for heavily soiled items</p>
+                <ul>
+                    <li>Pre-treatment</li>
+                    <li>Extended washing</li>
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+    <div class="container text-center">
+        <h2>Ready to Experience Premium Laundry Service?</h2>
+        <p>Join thousands of satisfied customers who trust us with their clothes</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+            {% if not session.get('user_id') %}
+            <a href="/register" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Create Free Account</a>
+            <a href="/track" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">Track Existing Order</a>
+            {% else %}
+            <a href="/order" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Place New Order</a>
+            <a href="/payment_history" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">View Payments</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.service-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.service-card p {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.service-features {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.feature-tag {
+    background: #f8f9fa;
+    color: #3498db;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Features Section */
+.features-section {
+    background: #f8f9fa;
+    padding: 4rem 0;
+    margin: 4rem -50vw;
+    padding-left: 50vw;
+    padding-right: 50vw;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-item h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.feature-item p {
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+/* Pricing Section */
+.pricing-section {
+    padding: 4rem 0;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    position: relative;
+}
+
+.pricing-card.featured {
+    border: 2px solid #3498db;
+    transform: scale(1.05);
+}
+
+.badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.pricing-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3498db;
+    margin-bottom: 0.5rem;
+}
+
+.price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7f8c8d;
+}
+
+.pricing-card p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.pricing-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f8f9fa;
+    color: #555;
+}
+
+.pricing-card li:last-child {
+    border-bottom: none;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin: 4rem -50vw;
+    padding-left: 50vw;
+    padding-right: 50vw;
+}
+
+.cta-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Button Styles */
+.btn-primary {
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    border: 2px solid white;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #3498db;
+}
+
+/* Section Header */
+.section-header {
+    margin-bottom: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .services-grid,
+    .features-grid,
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-card.featured {
+        transform: none;
+    }
+}
+</style>
+{% endblock %}

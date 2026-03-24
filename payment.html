@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-title">Complete Your Payment</div>
+    <p class="hero-subtitle">Secure payment for your laundry order</p>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="text-center">
+        <h2>Order Summary</h2>
+    </div>
+
+    <div class="order-summary">
+        <div class="summary-row">
+            <span>Order Token:</span>
+            <strong>{{ order.token }}</strong>
+        </div>
+        <div class="summary-row">
+            <span>Fabric Type:</span>
+            <span>{{ order.fabric_type }}</span>
+        </div>
+        <div class="summary-row">
+            <span>Quantity:</span>
+            <span>{{ order.quantity }} items</span>
+        </div>
+        <div class="summary-row">
+            <span>Dirt Level:</span>
+            <span>{{ order.dirt_level }}</span>
+        </div>
+        <div class="summary-row">
+            <span>Estimated Time:</span>
+            <span>{{ order.estimated_time }} minutes</span>
+        </div>
+        <div class="summary-row total">
+            <span>Total Amount:</span>
+            <strong>₹{{ "%.2f"|format(order.total_amount) }}</strong>
+        </div>
+    </div>
+
+    <form action="{{ url_for('process_payment', token=order.token) }}" method="POST">
+        <label for="payment_method">Payment Method:</label>
+        <select name="payment_method" id="payment_method" required>
+            <option value="UPI">📱 UPI</option>
+            <option value="Net Banking">🏦 Net Banking</option>
+        </select>
+
+        <div id="card_details" style="display: none;">
+            <label for="card_number">Card Number:</label>
+            <input type="text" name="card_number" id="card_number" placeholder="1234 5678 9012 3456">
+
+            <label for="expiry">Expiry Date:</label>
+            <input type="text" name="expiry" id="expiry" placeholder="MM/YY">
+
+            <label for="cvv">CVV:</label>
+            <input type="text" name="cvv" id="cvv" placeholder="123">
+        </div>
+
+        <button type="submit">Pay Now</button>
+        <a href="{{ url_for('my_orders') }}" class="btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+document.getElementById('payment_method').addEventListener('change', function() {
+    const cardDetails = document.getElementById('card_details');
+    const method = this.value;
+    if (method === 'Credit Card' || method === 'Debit Card') {
+        cardDetails.style.display = 'block';
+    } else {
+        cardDetails.style.display = 'none';
+    }
+});
+</script>
+
+<style>
+.order-summary {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-row.total {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2c3e50;
+    border-top: 2px solid #3498db;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #95a5a6;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+</style>
+{% endblock %}

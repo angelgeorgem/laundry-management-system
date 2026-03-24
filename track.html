@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center">
+        <h1>Track Your Order</h1>
+        <p>Enter your unique order token to check the current status.</p>
+    </div>
+
+    <form action="/track" method="POST" class="form-group">
+        <label for="token">Order Token:</label>
+        <input type="text" name="token" id="token" placeholder="e.g., ORD202601149999" required>
+        <button type="submit" class="mt-2">Check Status</button>
+    </form>
+
+    {% if order %}
+    <div class="mt-2 text-center" style="border-top: 1px solid #eee; padding-top: 1rem;">
+        <h2>Order Details</h2>
+        <p><strong>Fabric:</strong> {{ order.fabric_type }} | <strong>Quantity:</strong> {{ order.quantity }}</p>
+
+        <h3>Status:
+            {% if order.status == 'Completed' %}
+            <span class="status-badge status-completed">Ready for Pickup</span>
+            {% else %}
+            <span class="status-badge status-processing">Processing</span>
+            {% endif %}
+        </h3>
+
+        <p><strong>Estimated Time:</strong> {{ order.estimated_time }} minutes</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-title">Premium Laundry Service</div>
+    <p class="hero-subtitle">Professional Care for Your Clothes. Fast & Reliable.</p>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="text-center">
+        <h2>Book your Laundry Order now</h2>
+        <p>Select your preferences below to get started.</p>
+    </div>
+
+    <form action="/submit" method="POST">
+        <div style="margin-bottom: 1rem;">
+            <label for="quantity_light">Light Fabric (Cotton/Synthetics):</label>
+            <input type="number" name="quantity_light" id="quantity_light" min="0" value="1" required>
+            <small>4 min per item</small>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="quantity_heavy">Heavy Fabric (Denim/Jackets):</label>
+            <input type="number" name="quantity_heavy" id="quantity_heavy" min="0" value="0" required>
+            <small>8 min per item</small>
+        </div>
+
+        <p style="margin: 0 0 1rem; font-size: 0.9rem; color: #555;">Tip: Enter quantities for both types to order mixed laundry in a single booking.</p>
+
+        <label for="dirt_level">Dirt Level:</label>
+        <select name="dirt_level" id="dirt_level" required>
+            <option value="Low">💧 Low - Standard Wash</option>
+            <option value="High">🚿 High - Heavily Soiled (+2 mins/cloth)</option>
+        </select>
+
+        <label for="special_instructions">Special Instructions (Optional):</label>
+        <textarea name="special_instructions" id="special_instructions" rows="3"
+            placeholder="E.g., Fold shirts, hang trousers..."></textarea>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+{% endblock %}

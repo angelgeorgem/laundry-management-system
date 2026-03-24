@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="logo">
+            <img src="{{ url_for('static', filename='washing_machine.png') }}" alt="Logo">
+            WashTrack
+        </a>
+        <ul>
+            {% if not session.get('user_id') %}
+            <li><a href="/">Home</a></li>
+            {% endif %}
+
+            {% if session.get('user_id') %}
+            {% if session.get('role') == 'owner' %}
+            <li><a href="/dashboard">Dashboard</a></li>
+            {% else %}
+            <li><a href="/order">Order</a></li>
+            <li><a href="/track">Track Order</a></li>
+            <li><a href="/payment-history">Payment History</a></li>
+            <li><a href="/my-orders">My Orders</a></li>
+            {% endif %}
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/track">Track Order</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register" class="btn" style="padding: 8px 16px; margin-left: 10px;">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Laundry Processing System | Project
+    </div>
+</body>
+
+</html>

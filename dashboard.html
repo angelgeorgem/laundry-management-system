@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center">
+        <h1>Owner Dashboard</h1>
+        <p>Manage all active laundry orders.</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 1rem; padding: 1rem;">
+        <h2 style="margin-bottom: 0.75rem; font-size: 1.2rem;">Recent Feedback</h2>
+        {% if recent_feedback %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 12px;">
+            {% for fb in recent_feedback %}
+            <div style="background:#f7fafe; border:1px solid #d8e9f8; border-radius: 8px; padding: 0.9rem;">
+                <strong>{{ fb.customer_name }}</strong> (<small>{{ fb.token }}</small>)<br>
+                <span style="color:#334;">{{ fb.feedback }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No recent feedback yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Customer</th>
+                    <th>Fabric</th>
+                    <th>Qty</th>
+                    <th>Est. Time</th>
+                    <th>Instruction</th>
+                    <th>Feedback</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><strong>{{ order.token }}</strong></td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.fabric_type }} ({{ order.dirt_level }})</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.estimated_time }} min</td>
+                    <td>{{ order.special_instructions or '-' }}</td>
+                    <td>{{ order.customer_feedback or '-' }}</td>
+                    <td>
+                        {% if order.payment_status != 'Paid' %}
+                        <span class="status-badge status-pending">Pending Payment</span>
+                        {% elif order.status == 'Completed' %}
+                        <span class="status-badge status-completed">Completed</span>
+                        {% else %}
+                        <span class="status-badge status-processing">Processing</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.payment_status == 'Paid' and order.status == 'Processing' %}
+                        <a href="{{ url_for('update_status', token=order.token) }}" class="btn"
+                            style="padding: 6px 12px; font-size: 0.8rem;">Mark Done</a>
+                        {% else %}
+                        <span style="color: grey;">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="9" class="text-center">No active orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center">
+        <h1>Owner Overview</h1>
+        <p>Quick snapshot of current operations.</p>
+    </div>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-title">Total Orders</div>
+            <div class="stat-value">{{ stats.total_orders }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Pending Orders</div>
+            <div class="stat-value">{{ stats.pending_orders }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Processing Orders</div>
+            <div class="stat-value">{{ stats.processing_orders }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Completed Orders</div>
+            <div class="stat-value">{{ stats.completed_orders }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Clothes to Process</div>
+            <div class="stat-value">{{ stats.clothes_processing }}</div>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <canvas id="homeOrderChart" width="400" height="250"></canvas>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+        <h2>Recent Feedback</h2>
+        {% if recent_feedback %}
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+                {% for fb in recent_feedback %}
+                <div style="background:#f7fafe;border:1px solid #d8e9f8;border-radius:8px;padding:1rem;font-size:0.92rem;">
+                    <strong>{{ fb.customer_name }}</strong> <small>(#{{ fb.token }})</small><br>
+                    <p style="margin:.6rem 0 0;color:#333;">{{ fb.feedback }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No recent feedback yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctxHome = document.getElementById('homeOrderChart').getContext('2d');
+new Chart(ctxHome, {
+    type: 'doughnut',
+    data: {
+        labels: ['Processing', 'Completed'],
+        datasets: [{
+            data: [{{ stats.processing_orders }}, {{ stats.completed_orders }}],
+            backgroundColor: ['#ff9800', '#4caf50'],
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                position: 'bottom'
+            },
+            title: {
+                display: true,
+                text: 'Order Status Breakdown'
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

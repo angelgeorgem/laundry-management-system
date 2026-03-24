@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-title">Payment History</div>
+    <p class="hero-subtitle">View all your payment transactions</p>
+</div>
+
+<div class="card">
+    <div class="text-center">
+        <h2>Your Payments</h2>
+    </div>
+
+    {% if payments %}
+    <div class="table-responsive">
+        <table class="payment-table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Order Token</th>
+                    <th>Details</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.transaction_id }}</td>
+                    <td><a href="{{ url_for('track_order') }}" onclick="document.getElementById('token-input').value='{{ payment.token }}'; document.getElementById('track-form').submit(); return false;">{{ payment.token }}</a></td>
+                    <td>{{ payment.fabric_type }} × {{ payment.quantity }}</td>
+                    <td>₹{{ "%.2f"|format(payment.amount) }}</td>
+                    <td>{{ payment.payment_method }}</td>
+                    <td><span class="status status-{{ payment.status.lower() }}">{{ payment.status }}</span></td>
+                    <td>{{ payment.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <form id="track-form" action="{{ url_for('track_order') }}" method="POST" style="display: none;">
+        <input type="text" id="token-input" name="token">
+    </form>
+    {% else %}
+    <div class="text-center">
+        <p>No payment history found.</p>
+        <a href="{{ url_for('order_page') }}" class="btn">Place Your First Order</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.table-responsive {
+    overflow-x: auto;
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.payment-table th,
+.payment-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.payment-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.payment-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-failed {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background: #2980b9;
+}
+</style>
+{% endblock %}

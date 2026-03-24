@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center">
+        <h1>My Order History</h1>
+        <p>Track your past and current laundry orders.</p>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Details</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Est. Time</th>
+                    <th>Status</th>
+                    <th>Feedback</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><strong>{{ order.token }}</strong></td>
+                    <td>{{ order.fabric_type }} ({{ order.dirt_level }})</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>₹{{ "%.2f"|format(order.total_amount) }}</td>
+                    <td>
+                        {% if order.payment_status == 'Paid' %}
+                        <span class="status-badge status-completed">Paid</span>
+                        {% else %}
+                        <a href="{{ url_for('payment', token=order.token) }}" class="btn-pay">Pay Now</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ order.estimated_time }} min</td>
+                    <td>
+                        {% if order.status == 'Completed' %}
+                        <span class="status-badge status-completed">Ready</span>
+                        {% else %}
+                        <span class="status-badge status-processing">Washing</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.status == 'Completed' %}
+                            {% if order.customer_feedback %}
+                                <span class="status-badge status-completed">Feedback Submitted</span>
+                            {% else %}
+                                <a href="{{ url_for('feedback', token=order.token) }}" class="btn-pay">Give Feedback</a>
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ order.created_at[:16] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="9" class="text-center">You haven't placed any orders yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.btn-pay {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.btn-pay:hover {
+    background: #c0392b;
+}
+</style>
+{% endblock %}
